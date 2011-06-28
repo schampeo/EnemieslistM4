@@ -1,0 +1,8 @@
+EnemieslistM4 - a set of sendmail m4 files that implement various antispam
+techniques, most notably allowing for scoring or rejection of messages based
+on the HELO/EHLO argument and PTR name classifications in the Enemieslist
+project via DNSBL-style queries in realtime. For installation questions, see
+INSTALL. For support with configuration, email support@enemieslist.com.
+
+http://enemieslist.com/
+

@@ -1,0 +1,153 @@
+# $Id: EL_FromSpamsignTest.txt,v 1.1 2004/01/15 02:04:36 schampeo Exp $
+# last_
+KEL_FromSpamsignTest01 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2_[a-z][a-z]@
+# last
+KEL_FromSpamsignTest02 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2[a-z][a-z]@
+
+# flast_
+KEL_FromSpamsignTest03 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2_[a-z][a-z]@
+# flast
+KEL_FromSpamsignTest04 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2[a-z][a-z]@
+
+# f.last_
+KEL_FromSpamsignTest05 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2_[a-z][a-z]@
+# f.last
+KEL_FromSpamsignTest06 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2[a-z][a-z]@
+
+# f.mlast_
+KEL_FromSpamsignTest07 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2_[a-z][a-z]@
+# f.mlast
+KEL_FromSpamsignTest08 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2[a-z][a-z]@
+
+# f.m.last_
+KEL_FromSpamsignTest09 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z].[a-z]\2_[a-z][a-z]@
+# f.m.last
+KEL_FromSpamsignTest10 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z].[a-z]\2[a-z][a-z]@
+
+# f.m_last_
+KEL_FromSpamsignTest11 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]_[a-z]\2_[a-z][a-z]@
+# f.m_last
+KEL_FromSpamsignTest12 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]_[a-z]\2[a-z][a-z]@
+
+# f_last_
+KEL_FromSpamsignTest13 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2_[a-z][a-z]@
+# f_last
+KEL_FromSpamsignTest14 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2[a-z][a-z]@
+
+# f_mlast_
+KEL_FromSpamsignTest15 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2_[a-z][a-z]@
+# f_mlast
+KEL_FromSpamsignTest16 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2[a-z][a-z]@
+
+# f_m.last_
+KEL_FromSpamsignTest17 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z].[a-z]\2_[a-z][a-z]@
+# f_m.last
+KEL_FromSpamsignTest18 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z].[a-z]\2[a-z][a-z]@
+
+# f_m_last_
+KEL_FromSpamsignTest19 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]_[a-z]\2_[a-z][a-z]@
+# f_m_last
+KEL_FromSpamsignTest20 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]_[a-z]\2[a-z][a-z]@
+
+# firstlast_
+KEL_FromSpamsignTest21 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2_[a-z][a-z]@
+# firstlast
+KEL_FromSpamsignTest22 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2[a-z][a-z]@
+
+# first.last_
+KEL_FromSpamsignTest23 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z]\2_[a-z][a-z]@
+# first.last
+KEL_FromSpamsignTest24 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z]\2[a-z][a-z]@
+
+# first.mlast_
+KEL_FromSpamsignTest25 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z]\2_[a-z][a-z]@
+# first.mlast
+KEL_FromSpamsignTest26 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z]\2[a-z][a-z]@
+
+# first.m.last_
+KEL_FromSpamsignTest27 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z].[a-z]\2_[a-z][a-z]@
+# first.m.last
+KEL_FromSpamsignTest28 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z].[a-z]\2[a-z][a-z]@
+
+# first.m_last_
+KEL_FromSpamsignTest29 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z]_[a-z]\2_[a-z][a-z]@
+# first.m_last
+KEL_FromSpamsignTest30 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1.[a-z]_[a-z]\2[a-z][a-z]@
+
+# first_last_
+KEL_FromSpamsignTest31 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z]\2_[a-z][a-z]@
+# first_last
+KEL_FromSpamsignTest32 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z]\2[a-z][a-z]@
+
+# first_mlast_
+KEL_FromSpamsignTest33 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z]\2_[a-z][a-z]@
+# first_mlast
+KEL_FromSpamsignTest34 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z]\2[a-z][a-z]@
+
+# first_m.last_
+KEL_FromSpamsignTest35 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z].[a-z]\2_[a-z][a-z]@
+# first_m.last
+KEL_FromSpamsignTest36 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z].[a-z]\2[a-z][a-z]@
+
+# first_m_last_
+KEL_FromSpamsignTest37 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z]_[a-z]\2_[a-z][a-z]@
+# first_m_last
+KEL_FromSpamsignTest38 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <\1_[a-z]_[a-z]\2[a-z][a-z]@
+
+# firstmlast_
+KEL_FromSpamsignTest39 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2_[a-z][a-z]@
+# firstmlast
+KEL_FromSpamsignTest40 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2[a-z][a-z]@
+
+# firstm.last_
+KEL_FromSpamsignTest41 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2_[a-z][a-z]@
+# firstm.last
+KEL_FromSpamsignTest42 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2[a-z][a-z]@
+
+# firstm_last_
+KEL_FromSpamsignTest43 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2_[a-z][a-z]@
+# firstm_last
+KEL_FromSpamsignTest44 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2[a-z][a-z]@
+
+# fmlast_
+KEL_FromSpamsignTest45 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2_[a-z][a-z]@
+# fmlast
+KEL_FromSpamsignTest46 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2[a-z][a-z]@
+
+# fm.last_
+KEL_FromSpamsignTest47 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2_[a-z][a-z]@
+# fm.last
+KEL_FromSpamsignTest48 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2[a-z][a-z]@
+
+# fm_last_
+KEL_FromSpamsignTest49 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2_[a-z][a-z]@
+# fm_last
+KEL_FromSpamsignTest50 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2[a-z][a-z]@
+
+# mlast_
+KEL_FromSpamsignTest51 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2_[a-z][a-z]@
+# mlast
+KEL_FromSpamsignTest52 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]\2[a-z][a-z]@
+
+# m.last_
+KEL_FromSpamsignTest53 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2_[a-z][a-z]@
+# m.last
+KEL_FromSpamsignTest54 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z].[a-z]\2[a-z][a-z]@
+
+# m_last_
+KEL_FromSpamsignTest55 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2_[a-z][a-z]@
+# m_last
+KEL_FromSpamsignTest56 regex -f -a_SPAMSIGN_ ^"[A-Z]([a-z]+) [A-Z]*\.*\ *[A-Z]([a-z\-]+[A-Z]*[a-z]*)" <[a-z]_[a-z]\2[a-z][a-z]@
+
+KEL_FromSpamsignTestSeq00 sequence EL_FromSpamsignTest01 EL_FromSpamsignTest02 EL_FromSpamsignTest03 EL_FromSpamsignTest04 EL_FromSpamsignTest05 EL_FromSpamsignTest06 EL_FromSpamsignTest07 EL_FromSpamsignTest08 EL_FromSpamsignTest09 EL_FromSpamsignTest10 EL_FromSpamsignTest11 EL_FromSpamsignTest12 
+
+KEL_FromSpamsignTestSeq01 sequence EL_FromSpamsignTest13 EL_FromSpamsignTest14 EL_FromSpamsignTest15 EL_FromSpamsignTest16 EL_FromSpamsignTest17 EL_FromSpamsignTest18 EL_FromSpamsignTest19 EL_FromSpamsignTest20 EL_FromSpamsignTest21 EL_FromSpamsignTest22 EL_FromSpamsignTest23 EL_FromSpamsignTest24 
+
+KEL_FromSpamsignTestSeq02 sequence EL_FromSpamsignTest25 EL_FromSpamsignTest26 EL_FromSpamsignTest27 EL_FromSpamsignTest28 EL_FromSpamsignTest29 EL_FromSpamsignTest30 EL_FromSpamsignTest31 EL_FromSpamsignTest32 EL_FromSpamsignTest33 EL_FromSpamsignTest34 EL_FromSpamsignTest35 EL_FromSpamsignTest36 
+
+KEL_FromSpamsignTestSeq03 sequence EL_FromSpamsignTest37 EL_FromSpamsignTest38 EL_FromSpamsignTest39 EL_FromSpamsignTest40 EL_FromSpamsignTest41 EL_FromSpamsignTest42 EL_FromSpamsignTest43 EL_FromSpamsignTest44 EL_FromSpamsignTest45 EL_FromSpamsignTest46 EL_FromSpamsignTest47 EL_FromSpamsignTest48 
+
+KEL_FromSpamsignTestSeq04 sequence EL_FromSpamsignTest49 EL_FromSpamsignTest50 EL_FromSpamsignTest51 EL_FromSpamsignTest52 EL_FromSpamsignTest53 EL_FromSpamsignTest54 EL_FromSpamsignTest55 EL_FromSpamsignTest56 
+
+KEL_FromSpamsignTestSeq sequence EL_FromSpamsignTestSeq00 EL_FromSpamsignTestSeq01 EL_FromSpamsignTestSeq02 EL_FromSpamsignTestSeq03 EL_FromSpamsignTestSeq04
+

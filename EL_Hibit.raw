@@ -1,0 +1,1 @@
+KCheck_BogusHELO5 regex -b -s -a@BOGUS ^.*[€-ÿ].*

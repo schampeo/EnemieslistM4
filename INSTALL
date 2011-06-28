@@ -1,0 +1,213 @@
+Step-by-Step Installation Instructions
+
+========================================================================
+sendmail:
+------------------------------------------------------------------------
+Download sendmail:
+
+ ftp://ftp.sendmail.org/pub/sendmail/sendmail.8.13.7.tar.gz
+
+Unpack the distribution:
+
+ sh$ tar xvzf sendmail.8.13.7.tar.gz
+
+Make any necessary local configuration modifications, and then ensure
+that regular expressions have been enabled:
+
+ (site.config.m4):
+
+APPENDDEF(`confMAPDEF', `-DMAP_REGEX ')
+
+This may not be necessary in more recent sendmail releases; it does
+not appear to be necessary as of 8.13.7 at any rate, but was with 8.11.x.
+
+Edit sendmail/conf.h to bump up the allowed number of rulesets from 100
+to 128 (or as required). Note that the number below is double the number
+of allowed rulesets (so a value of 200 == 100 rulesets). Change
+
+#define MAXRWSETS   200     /* max # of sets of rewriting rules */
+to 
+#define MAXRWSETS   256     /* max # of sets of rewriting rules */
+
+This avoids an error message in the event that you end up using the full
+package, which may have more than 100 total rulesets. I'm working on
+trimming the package's use of rulesets, but sendmail.org is also working
+on adding new rulesets with every new release, so it's not always
+avoidable. If you find that during setting up your .cf you've exceeded
+the ruleset limit, you'll see an error like:
+
+  Jun 20 18:40:26 habanero sendmail[25012]: NOQUEUE: SYSERR(root):
+  /etc/mail/sendmail.cf: line 19206: AddDomain: too many named rulesets
+  (100 max)
+
+Either recompile sendmail, or, if you can't, start removing EL HACK()s
+until you're under the requisite 100 rulesets. Start with the various
+uncommon header checks, such as EL_Check_Header_XOriginalArrivalTime,
+before disabling more powerful parts of the package.
+
+Also bump up the MAXNAME value to 1024, to avoid errors related to sendmail
+automatically discarding parts of an overlong header.
+
+Follow the rest of the instructions for building sendmail.
+
+Once the binary has been created, we'll need to look into creating a .cf
+file. This means we must first create a .mc file.
+
+First, grab the latest package release:
+
+ http://enemieslist.com/downloads/release.m4.tgz
+
+   Please note that I'm working on a different release format, that will
+   unpack into /usr/local/enemieslist.com and will feature "dist" files
+   and be more flexible for occasional updates while allowing local
+   overrides. Comments, suggestions welcome.
+
+You may need to make a symlink from wherever your sendmail cf dir is
+over to /etc/mail/cf (until we get things autoconfiscated).
+
+Unpack the release tarball into your sendmail hack/ directory. Then
+grab the latest version of the EL sendmail distro:
+
+ http://enemieslist.com/downloads/sendmail_rules.m4
+
+and stick it into your hack/ dir, too. You will also want to grab
+the set of so-called "right anchors":
+
+ http://enemieslist.com/downloads/sendmail_access_db
+
+and add it to your access.db; it's all the access.db-compatible naming
+schemes - the rest require regexes to work properly.
+
+Please note that there is now another version of the "right anchors"
+that is used to create a standalone db file, for tighter-grained control
+over which addresses reject/tag mail from hosts that match those
+substrings. Use either, as you prefer.
+
+The sample .mc dropin is here:
+
+ http://enemieslist.com/downloads/sample.mc
+
+Add this to your .mc, making the appropriate changes to the defaults.
+This includes making sure that the bit above "END dev-only local
+configuration" is removed or disabled as appropriate for your install.
+
+Then go to 'global options' and set the following macros:
+
+define(`confEL_LOCAL_DOMAINS', `(example)\.(com|net|org)')dnl
+define(`confEL_LOCAL_HOSTNAME', `mail\.example\.com')dnl
+define(`confEL_LOCAL_IP', `10\.1\.1\.1')dnl
+define(`confEL_LOCAL_IP_UNESCAPED', `10.1.1.1')dnl
+define(`confEL_CONTACT_EMAIL', `postmaster@example.com')dnl
+define(`confEL_CONTACT_PHONE', `+1-555-555-1212')dnl
+define(`confEL_ROLE_ACCOUNTS', `(abuse|hostmaster|postmaster|webmaster)')dnl
+
+define(`confEL_GEOGRAPHIC_ISOCODES',
+       `(africa|AE|AR|BF|BG|BJ|BW|CI|CY|DK|ES|ET|GH|IL|IR|KE|KR|LB|LV|ML|MR|MY|NG|NL|RW|SN|TG|TH|VN|ZA|ZW)')dnl
+define(`confEL_BogusInReplyToDomains',
+       `(example.com|example.net|example.org)')dnl
+define(`confEL_HeaderSuspicious', `X-EL-Suspicious')dnl
+
+Read through the whole file and enable or disable any of the bits you
+are particularly interested in or cannot use because of local policy.
+If you have any questions about any of the switches, feel free to email
+me at beta@enemieslist.com.
+
+Pay close attention to the various DBM files you'll need to create; the
+whitelist, policy, wordlist, blacklist, domains, offwhitelist, geographic,
+badhelos, etc. You can grab some of these from the EL downloads site;
+I recommend you start with geographic (for fighting 419 scams), wordlist
+(for fighting off "Mobster I. Syphilitic" spamware), whitelist (for the
+occasional legit but misconfigured mail server), and policy (for setting
+the local default and any override policies).
+
+Building the DBM files is relatively easy; we use a script here that
+simply runs makemap on them a la:
+
+echo "making blacklist..."
+makemap -v btree $DIR/blacklist.db \
+        < $ADIR/blacklist 2>&1 | grep "duplicate key"
+
+where DIR is /etc/mail and ADIR is a temporary location where we
+maintain our own local copies during the make.
+
+Double check to make sure you're using the same type of map in the call
+to makemap as you specified in the .mc file. For example, we use 'btree'
+because it's proven fastest to rebuild, so in the .mc file make sure to
+set confEL_DB_MAP_TYPE appropriately.
+
+  define(`confEL_DB_MAP_TYPE', `btree -T<TMPF>')dnl
+
+The starter policy file is here:
+
+ http://enemieslist.com/downloads/sample-policy
+
+Each SMTP-time error and header "tagging" error message is configurable
+via .mc, as well - the defaults are inoffensive enough, but you can use
+this as a template if you need to modify them; the tokens (e.g. GENRDNS)
+should stay, though - they're keyed to the checks and can help me track
+down which rule is giving you fits or not working properly, and you can
+use them to generate stats:
+
+ http://enemieslist.com/downloads/allerrordefines.m4
+
+Building the .cf file from the .mc is simply a matter of running m4 on
+your .mc file and capturing the output in a new .cf:
+
+  m4 < your.mc > yournew.cf
+
+To ensure you've done everything correctly, and created a working .cf
+file, you'll want to test it with sendmail itself.
+
+  sendmail -bt -C ./yournew.cf
+
+You *should* get directly to the test mode prompt, a la
+
+  ADDRESS TEST MODE (ruleset 3 NOT automatically invoked)
+  Enter <ruleset> <address>
+  > 
+
+If you see any errors, and be sure to check your syslog as well, as some
+errors don't show up in the console, walk back through and see if you can
+tell where things broke. 
+
+??? run series of other, check-specific tests (still packaging these up)
+
+If everything looks good, make a backup of your current sendmail.cf, and
+install the new .cf file where your sendmail looks for sendmail.cf. Restart
+your server with a HUP signal or via init script, and start watching the
+mail logs for rejected spam and abuse. 
+
+I recommend you follow stats on your rejected email, on at least a daily
+basis and possibly in real-time for the first few days, as you discover
+which of the hosts you ordinarily communicate with fail basic RFC
+compliance or act in suspicious ways, so you can contact those admins or
+in the worst case, simply whitelist their servers locally.
+
+And that's it! If you see mail get through that you think should be
+filtered, and EL isn't doing the job, send examples to me via email and
+I'll do what I can do. We especially welcome new "generic" reverse DNS
+patterns, so we can expand the patterns database.
+
+??? Installation instructions for exim and postfix coming soon.
+
+========================================================================
+exim:
+------------------------------------------------------------------------
+
+# In main section of Exim4  "configure" file
+
+acl_smtp_rcpt = check_recipient
+
+# In ACL section
+
+check_recipient:
+
+# with
+
+deny    hosts = /some/file/of/regexps
+        message=$host_data found in blacklist
+
+
+Steven Champeon
+enemieslist.com
+$Id: INSTALL,v 1.4 2009/02/13 00:47:50 schampeo Exp $

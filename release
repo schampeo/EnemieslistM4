@@ -1,0 +1,88 @@
+#!/bin/sh
+
+DIR=/web/enemieslist.com/devel/sendmail
+cd ${DIR}
+
+# get date
+DATE=`/bin/date +"%Y%m%d"`
+echo "preparing release for ${DATE}"
+
+# echo new location to NOTES
+echo "http://enemieslist.com/downloads/release.m4.tgz" \
+"http://enemieslist.com/downloads/release-${DATE}.m4.tgz" \
+\
+>> ${DIR}/release-${DATE}.NOTES
+
+# get last release date
+LASTDATE=`/bin/ls -1 ${DIR}/tmp |sort -r |head -n1`
+
+# make tmp directory
+mkdir -p ${DIR}/tmp/${DATE}/enemieslist.com/dist/m4
+
+# copy all EL*m4 files to tmp/DATE
+cp ${DIR}/EL*m4 ${DIR}/tmp/${DATE}/enemieslist.com/dist/m4
+
+# copy distro files to temp dir
+
+cd ${DIR}/../../dist/
+mkdir ${DIR}/tmp/${DATE}/enemieslist.com/dist/bin
+cp ./bin/*sh  ${DIR}/tmp/${DATE}/enemieslist.com/dist/bin
+
+mkdir ${DIR}/tmp/${DATE}/enemieslist.com/dist/sbin
+cp ./sbin/*sh ${DIR}/tmp/${DATE}/enemieslist.com/dist/sbin
+
+mkdir ${DIR}/tmp/${DATE}/enemieslist.com/dist/doc
+cp ./doc/{FILES,INSTALL} ${DIR}/tmp/${DATE}/enemieslist.com/dist/doc
+
+mkdir ${DIR}/tmp/${DATE}/enemieslist.com/dist/etc
+cp ./etc/{config,policy-dist,abusecontacts-dist} ${DIR}/tmp/${DATE}/enemieslist.com/dist/etc
+
+mkdir ${DIR}/tmp/${DATE}/enemieslist.com/dist/var
+cp ./var/*-dist ${DIR}/tmp/${DATE}/enemieslist.com/dist/var
+
+cd ${DIR}
+
+# check in all EL*.m4 files
+cvs commit -m"checkin for release ${DATE}" EL*m4 
+
+# ??? in here we should build the auto-docs 
+
+# create the release tarball
+cd ${DIR}/tmp/${DATE}
+
+tar cvf ${DIR}/release-${DATE}.m4.tar ./enemieslist.com/dist/m4/EL*.m4
+
+# In here we should bundle any utilities necessary for installation
+# such as make-symlinks.sh, make-dbm-files.sh, and anything in /bin
+tar rvf ${DIR}/release-${DATE}.m4.tar ./enemieslist.com/dist/bin
+tar rvf ${DIR}/release-${DATE}.m4.tar ./enemieslist.com/dist/sbin
+
+# documentation
+tar rvf ${DIR}/release-${DATE}.m4.tar ./enemieslist.com/dist/doc/
+
+# default policy
+tar rvf ${DIR}/release-${DATE}.m4.tar ./enemieslist.com/dist/etc/
+tar rvf ${DIR}/release-${DATE}.m4.tar ./enemieslist.com/dist/var/
+
+cd ${DIR}
+
+# gzip the dist file
+gzip ${DIR}/release-${DATE}.m4.tar
+
+mv ${DIR}/release-${DATE}.m4.tar.gz ${DIR}/release-${DATE}.m4.tgz 
+
+# remove old symlink
+rm ${DIR}/release.m4.tgz
+
+# and create new one
+ln -s ${DIR}/release-${DATE}.m4.tgz ${DIR}/release.m4.tgz
+
+# redirect diff output into release-$DATE.NOTES
+echo diff -bitsr tmp/${LASTDATE} tmp/${DATE}
+diff -bitsr tmp/${LASTDATE} tmp/${DATE} \
+| grep -v 'identical' \
+| perl -pe 's/^diff.*\/(EL_.*)$/$1:\n\n  - \n/' > ${DIR}/release-${DATE}.NOTES
+
+# emacs NOTES file and turn into useful documentation
+emacs ${DIR}/release-${DATE}.NOTES
+

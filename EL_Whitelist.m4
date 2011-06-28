@@ -1,6 +1,9 @@
 divert(-1)dnl
 #
 # Copyright (c) 2004-2011 hesketh.com/inc. All rights reserved.
+
+# See the file LICENSE in the distribution for details.
+
 #
 # questions? <support@enemieslist.com>
 #

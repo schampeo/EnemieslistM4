@@ -1,0 +1,8 @@
+# Enemieslist "outscatter servers" table
+#
+# format: 
+#
+#  hostname-or-ip	[tab]	BOUNCER
+#
+#
+bouncer.enemieslist.com	BOUNCER

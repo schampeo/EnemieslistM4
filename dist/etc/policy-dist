@@ -1,0 +1,111 @@
+# $Id: policy-dist,v 1.6 2009/08/07 22:19:55 schampeo Exp $
+#
+# Enemieslist policy table
+#
+# format:
+#
+#  address [tab] [keyword-list]
+#
+# address is the address given in RCPT TO
+# presence of keyword implies an 'on' switch for that test or group of tests
+#
+# NOTE: it is now possible to set a full default policy using 'default' and
+# only override the default policy for specific tests - if the token is in
+# the default policy, but not in the @domain or recipient policy, default
+# will be used. So, given a default policy of
+#
+# default: !GENRDNS:generic,!GENRDNS:dynamic,+GENRDNS:static,[ ... ],ASK
+#
+# and a user policy of
+#
+# recipient: +GENRDNS:generic
+#
+# any messages sent by hosts with generic rDNS would be tagged/scored, not
+# rejected, for that recipient. 
+#
+# '*' items aren't working yet
+#
+# current list of keywords:
+#
+# 419GEO    - check for prohibited geographic / country injection IPs
+# AHBL      - check this IP in AHBL
+# ALLEXE    - check for wide variety of executable files
+# ALLZIP    - check for wide variety of compressed files
+# BADHEAD   - catchall for wide variety of header checks
+# BADHELO   - check HELO against badhelos list
+# BLACKLIST - check to see if remote host is in local blacklist
+# BOGUSHELO - check for several non-RFC-compliant HELOs (excludes forgeries)
+# BOGUSRDNS - check for one-word rDNS
+# BOUNCER   - check for outscatter
+# BRACUDA   - check for barracuda antispam appliance
+# CGNHELO   - check connecting host's HELO against compact patterns
+# CGNRDNS   - check connecting host's rDNS against compact patterns
+# DOMAINSBL - check to see if remote host is in local domains blacklist
+# DSBL      - check this IP in DSBL
+# FMLZZ     - check for "First M. Last" <fmlastzz@ spammer
+# GEN419    - check for generic senders common to 419 scams
+# GENRDNS   - check connecting host's rDNS against EL patterns
+#           - may further specify policy for 'generic', 'static', 'dynamic'
+#           - using GENRDNS:generic, GENRDNS:static, GENRDNS:dynamic
+#           - and 'mixed' using GENRDNS:mixed
+#           - and for compact and rightanchor pattern and substring matches
+#           - using GENRDNS:compact, GENRDNS:rightanchor (DNSBL only)
+#           - also GENRDNS:webhost, GENRDNS:resnet, and GENRDNS:unassigned
+#           - also GENRDNS:natproxy, GENRDNS:badrdns, GENRDNS:cloud
+#           - NOTE: this replaces CGNRDNS/CGNHELO/RTANCHR/RTANCHH
+# HELOGEN   - check connecting host's HELO against EL patterns
+#           - may further specify policy for 'generic', 'static', 'dynamic'
+#           - using HELOGEN:generic, HELOGEN:static, HELOGEN:dynamic
+#           - and 'mixed' using HELOGEN:mixed
+#           - and for compact and rightanchor pattern and substring matches
+#           - using HELOGEN:compact, HELOGEN:rightanchor (DNSBL only)
+#           - also HELOGEN:webhost, HELOGEN:resnet, and HELOGEN:unassigned
+#           - also HELOGEN:natproxy, HELOGEN:badrdns, HELOGEN:cloud
+#           - NOTE: this replaces CGNRDNS/CGNHELO/RTANCHR/RTANCHH
+# HELORAT   - check for sender/helo ratware (419/AFF gangs)
+# HISCORE:n - if spam score exceeds n, reject with an error
+# HOTM419   - this checks for common hotmail localparts used by 419ers
+# MEDKIT    - check for medkit.info spamware (dictionary words in recd headers)
+# MIDADDY   - check for addresses that look like Message-Ids
+# MOBSTER   - check for "Mobster I. Syphilitic" spamware signature
+# NOBANK    - this address does not have a bank account (phish check)
+# NOBOUNCE  - this address does not send email, so should not get bounces
+# NOFCRDNS  - no mail from hosts with possibly forged rDNS in certain TLDs
+# NOPHISH   - check for phishing scams
+# RTANCHH   - check HELO against "right-anchor" rDNS hostname substrings
+#             can also further specify :static, :dynamic, :generic, :mixed
+# RTANCHR   - check hostname against "right-anchor" rDNS hostname substrings
+#             can also further specify :static, :dynamic, :generic, :mixed
+# SPAMHAUS  - check this IP in Spamhaus Zen
+# SOMEEXE   - check for executables
+# SOMEZIP   - check for zip files
+# SPAMTRAP  - check recipients and Bcc/Cc for known spamtraps
+# SURBL     - check domains in message headers, HELO for surbl.org listing
+# TRUSTCM:n - check for someone else's XCloudmarkScore header and reject if
+#             their score/hits value was higher than 'n'
+# TRUSTSA:n - check for someone else's SpamAssassin header and reject if
+#             their score/hits value was higher than 'n'
+# TRUSTSD:n - check for someone else's XSpamDetect header and reject if
+#             their score/hits value was higher than 'n'
+# URIBL     - check domains in message headers, HELO for uribl.com listing
+#
+# TAG     - tag matches with a X-EL-Suspicious header
+# BLOCK   - reject during SMTP conversation
+# ASK     - reject if keyword preceded by '!', tag/score if preceded by '+'
+#
+# default specifies the default policy for all addresses not listed here
+#
+default   +GENRDNS:generic,!GENRDNS:dynamic,+GENRDNS:mixed,+GENRDNS:static,+GENRDNS:rightanchor,!GENRDNS:compact,!GENRDNS:resnet,!GENRDNS:unassigned,!GENRDNS:natproxy,!GENRDNS:badrdns,+GENRDNS:cloud,+GENRDNS:webhost,!HELOGEN:generic,!HELOGEN:dynamic,!HELOGEN:mixed,!HELOGEN:static,+HELOGEN:rightanchor,!HELOGEN:compact,!HELOGEN:resnet,!HELOGEN:unassigned,!HELOGEN:natproxy,!HELOGEN:badrdns,!HELOGEN:cloud,+HELOGEN:webhost,+CGNRDNS,!CGNHELO,!BOGUSHELO,!BADHEAD,!BADHELO,!BLACKLIST,!DOMAINSBL,+SOMEZIP,+ALLZIP,+SOMEEXE,+ALLEXE,!MOBSTER,!BOGUSRDNS,!NOFCRDNS,+BRACUDA,!FMLZZ,!BOUNCER,+HOTM419,+GEN419,!HELORAT,!NOPHISH,!MEDKIT,!VIPWATCH,TRUSTCM:99,TRUSTSA:8,TRUSTSD:8,HISCORE:5,+URIBL,+SURBL,!SPAMTRAP,!SPAMHAUS,!DSBL,+RTANCHR:static,!RTANCHR:dynamic,!RTANCHR:generic,+RTANCHR:mixed,!RTANCHH:static,!RTANCHH:dynamic,!RTANCHH:generic,+RTANCHH:mixed,!AHBL,+MIDADDY,!419GEO,ASK
+
+#
+# NOTE WELL: TAG and BLOCK are deprecated and may be removed from a future
+#            release of the package.
+# 
+tag@enemieslist.com	GENRDNS,HELOGEN,CGNRDNS,CGNHELO,BOGUSHELO,BADHEAD,BADHELO,BLACKLIST,DOMAINSBL,SOMEZIP,ALLZIP,SOMEEXE,ALLEXE,MOBSTER,BOGUSRDNS,NOFCRDNS,BRACUDA,FMLZZ,BOUNCER,HELORAT,NOPHISH,MEDKIT,HOTM419,419GEO,GEN419,TRUSTCM:99,TRUSTSA:5,TRUSTSD:8,HISCORE:4,URIBL,SURBL,RTANCHR:static,RTANCHR:dynamic,RTANCHR:generic,RTANCHH:static,RTANCHH:dynamic,+GENRDNS:mixed,RTANCHH:generic,AHBL,DSBL,SPAMHAUS,SPAMTRAP,MIDADDY,TAG
+block@enemieslist.com	GENRDNS,HELOGEN,CGNRDNS,CGNHELO,BOGUSHELO,BADHEAD,BADHELO,BLACKLIST,DOMAINSBL,SOMEZIP,ALLZIP,SOMEEXE,ALLEXE,MOBSTER,BOGUSRDNS,NOFCRDNS,BRACUDA,FMLZZ,BOUNCER,HELORAT,NOPHISH,MEDKIT,HOTM419,419GEO,GEN419,TRUSTCM:99,TRUSTSA:5,TRUSTSD:8,HISCORE:4,URIBL,SURBL,RTANCHR:static,RTANCHR:dynamic,RTANCHR:generic,RTANCHH:static,RTANCHH:dynamic,+GENRDNS:mixed,RTANCHH:generic,AHBL,DSBL,SPAMHAUS,SPAMTRAP,MIDADDY,BLOCK
+
+ask@enemieslist.com		!GENRDNS:generic,!GENRDNS:dynamic,+GENRDNS:mixed,+GENRDNS:static,+GENRDNS:rightanchor,!GENRDNS:compact,!GENRDNS:resnet,!GENRDNS:unassigned,!GENRDNS:natproxy,!GENRDNS:badrdns,+GENRDNS:cloud,+GENRDNS:webhost,!HELOGEN:generic,!HELOGEN:dynamic,!HELOGEN:mixed,+HELOGEN:static,+HELOGEN:rightanchor,!HELOGEN:compact,!HELOGEN:resnet,!HELOGEN:unassigned,!HELOGEN:natproxy,!HELOGEN:badrdns,!HELOGEN:cloud,+HELOGEN:webhost,+CGNRDNS,!CGNHELO,+BOGUSHELO,!BADHEAD,+BADHELO,+BLACKLIST,+DOMAINSBL,+SOMEZIP,+ALLZIP,+SOMEEXE,+ALLEXE,+MOBSTER,+BOGUSRDNS,+NOFCRDNS,+BRACUDA,!FMLZZ,!BOUNCER,!HELORAT,+NOPHISH,!MEDKIT,+HOTM419,+419GEO,+GEN419,TRUSTCM:99,TRUSTSA:5,TRUSTSD:8,HISCORE:4,!URIBL,!SURBL,+RTANCHR:static,!RTANCHR:dynamic,!RTANCHR:mixed,+RTANCHR:generic,!RTANCHH:static,!RTANCHH:dynamic,+RTANCHH:mixed,!RTANCHH:generic,!AHBL,!DSBL,!SPAMHAUS,!SPAMTRAP,+MIDADDY,ASK
+
+role@enemieslist.com	!GENRDNS:generic,!GENRDNS:dynamic,+GENRDNS:mixed,+GENRDNS:static,+GENRDNS:rightanchor,!GENRDNS:compact,!GENRDNS:resnet,!GENRDNS:unassigned,!GENRDNS:natproxy,!GENRDNS:badrdns,+GENRDNS:cloud,+GENRDNS:webhost,!HELOGEN:generic,!HELOGEN:dynamic,!HELOGEN:mixed,+HELOGEN:static,+HELOGEN:rightanchor,!HELOGEN:compact,!HELOGEN:resnet,!HELOGEN:unassigned,!HELOGEN:natproxy,!HELOGEN:badrdns,!HELOGEN:cloud,+HELOGEN:webhost,+CGNRDNS,!CGNHELO,+BOGUSHELO,!BADHEAD,+BADHELO,+BLACKLIST,+DOMAINSBL,+SOMEZIP,+ALLZIP,+SOMEEXE,+ALLEXE,+MOBSTER,+BOGUSRDNS,+NOFCRDNS,+BRACUDA,!FMLZZ,!BOUNCER,!HELORAT,+NOPHISH,!MEDKIT,+HOTM419,+419GEO,+GEN419,TRUSTCM:99,TRUSTSA:5,TRUSTSD:8,HISCORE:4,!URIBL,!SURBL,!RTANCHR:static,!RTANCHR:dynamic,!RTANCHR:mixed,!RTANCHR:generic,!RTANCHH:static,!RTANCHH:dynamic,+RTANCHH:mixed,!RTANCHH:generic,!NOBANK,!AHBL,!DSBL,!SPAMHAUS,!SPAMTRAP,+MIDADDY,ASK
+
+neversends@enemieslist.com	!GENRDNS:generic,!GENRDNS:dynamic,+GENRDNS:mixed,+GENRDNS:static,+GENRDNS:rightanchor,!GENRDNS:compact,!GENRDNS:resnet,!GENRDNS:unassigned,!GENRDNS:natproxy,!GENRDNS:badrdns,+GENRDNS:cloud,+GENRDNS:webhost,!HELOGEN:generic,!HELOGEN:dynamic,!HELOGEN:mixed,+HELOGEN:static,+HELOGEN:rightanchor,!HELOGEN:compact,!HELOGEN:resnet,!HELOGEN:unassigned,!HELOGEN:natproxy,!HELOGEN:badrdns,!HELOGEN:cloud,+HELOGEN:webhost,+CGNRDNS,!CGNHELO,+BOGUSHELO,!BADHEAD,+BADHELO,+BLACKLIST,+DOMAINSBL,+SOMEZIP,+ALLZIP,+SOMEEXE,+ALLEXE,+MOBSTER,+BOGUSRDNS,+NOFCRDNS,+BRACUDA,!FMLZZ,!BOUNCER,!HELORAT,+NOPHISH,!MEDKIT,+HOTM419,+419GEO,+GEN419,TRUSTCM:99,TRUSTSA:5,TRUSTSD:8,HISCORE:4,!URIBL,!SURBL,!RTANCHR:static,!RTANCHR:dynamic,!RTANCHR:mixed,!RTANCHR:generic,!RTANCHH:static,!RTANCHH:dynamic,+RTANCHH:mixed,!RTANCHH:generic,!NOBANK,!NOBOUNCE,!AHBL,!DSBL,!SPAMHAUS,!SPAMTRAP,!MIDADDY,ASK

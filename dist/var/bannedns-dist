@@ -1,0 +1,13 @@
+# Enemieslist "banned NS servers" table
+#
+# format:
+#
+#  IP or octet	[tab]	BANNED
+#
+#
+0	BANNED
+1	BANNED
+10	BANNED
+127	BANNED
+192.168	BANNED
+

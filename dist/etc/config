@@ -1,0 +1,6 @@
+#!/bin/sh
+
+export EL_LIBRARY_PATH=/Users/schampeo/proj/enemieslist.com/lib/perl
+export EL_LOCAL_DOMAIN=enemieslist.com
+export EL_DNSBL_SERVER_IP=192.168.1.17
+export EL_DNSBL_SERVER_PORT=53

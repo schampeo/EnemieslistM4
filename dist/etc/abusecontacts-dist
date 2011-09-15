@@ -1,0 +1,12 @@
+# Enemieslist abusecontacts table
+#
+# format:
+#
+# Report:example.com	[tab]	YES
+# Contact:example.com	[tab]	abuse@example.com
+#
+# Both fields need to be present; the first says to report it, the second
+# the address to report it to.
+#
+Report:enemieslist.com	YES
+Contact:enemieslist.com	abuse@enemieslist.com

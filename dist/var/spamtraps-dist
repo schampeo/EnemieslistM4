@@ -1,0 +1,8 @@
+# Enemieslist IP spamtrap blacklist
+#
+# format:
+#
+#  email@address.example.com	[tab]	SPAMTRAP
+#
+#
+spamtrap@enemieslist.com	SPAMTRAP

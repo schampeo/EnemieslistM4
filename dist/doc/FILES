@@ -1,0 +1,184 @@
+FILES
+
+being a description of what each file in the EL distribution is, and
+how to use - and NOT to use - them. Does not yet cover the various
+EL_* m4 files that comprise the sendmail package, which have their own
+documentation, or will. 
+
+Basic caveats apply here: if you don't know what's in it, don't use it
+without asking. 
+
+badhelos
+
+	a list of known bad 'HELO' strings; largely unmaintained due to
+	there being rules in the sendmail distribution that allow you to
+	reject invalid HELO strings (such as Windows hostnames with no TLD
+	or those with hi-bit characters in them). If using outside of the
+	sendmail package, this should ONLY be used as a full-string match.
+
+
+bannedmx
+bannedns
+
+	contains a list of known MX or NS IPs for spam domains; the idea
+	here is that spammers often reuse a single MX IP and the same NS
+	IPs across throwaway domains. Relatively unmaintained because it
+	wasn't found to be very useful in practice, especially as the spam
+	domains aren't usually used in rfc2821 MailFroms, only in the body.
+	Use outside of sendmail is discouraged.
+
+
+bouncers
+
+	contains a list of known "outscatter" or "blowback" sources; this
+	is used by the sendmail package to check for blowback, along with a
+	check for the MailFrom to see if it's the null sender (or one of a
+	few dozen variants on "null" from non-compliant software that tries
+	to generate NDNs but sends them from a non-null sender). 
+
+
+domains
+
+	a list of domains seen in spam; while it is actively maintained (I
+	keep adding domains to it), we encourage the use of other, better
+	maintained resources such as SURBL or URIBL, for "mass blacklisting"
+	of spammer domains. This file is effectively my local domains BL,
+	and YMMV as to whether or not it's appropriate for you to use it;
+	it was generated from a wide variety of sources, including spam
+	corpuses, public blacklists, inbound spam to trap addresses, data
+	mining research both public and secret, etc. Use at your own risk.
+
+
+exim_hosts
+exim_hosts_compact
+
+	a list of regexes for known "generic" rDNS naming conventions; 
+	the 'compact' version should be used in conjunction with the
+	'rightanchors' file or some sub-product, as it strips out any 
+	patterns that have "domain tails" or "right-anchored" substrings
+	ie ('.dyn.example.com') where regexes aren't necessary, as well
+	as a set of "left anchored" patterns commonly seen in generic
+	hostnames ie ('^dynamic-\d+'). Will go away when the DNSBL is
+	live and out of testing.
+
+
+geographic
+
+	contains a list of netblocks in "octet" format, originally
+	generated from the RIR records that show which netblocks are
+	issued to which countries; it's not very well maintained as per
+	new additions/allocations, because there are many overrides (eg,
+	for known abused/open proxies, generic "africa" listings,
+	satellite providers whose IPs are registered to Israel but
+	deployed in West Africa). It is used by the sendmail package in
+	conjunction with Received/X-Originating-IP/etc. header checks to
+	determine the country of origin of messages sent via many commonly
+	abused webmail systems, as well as a few large ISPs, to reject
+	mail that is overwhelmingly Nigerian 419/advance fee fraud scams.
+
+
+offwhitelist
+
+	contains a list of known possibly legitimate mailhosts, classified
+	in terms of their problems: O for offwhite (we received spam via
+	their IP), P for phishing scams (usually compromised webhosts), T
+	for "doesn't provide tracking information, such as point of
+	injection" so they're commonly abused by 419ers, 419 for known
+	sources of 419 spam, L for legitimate mailhost (just a placeholder
+	so we can keep them in the file, possibly they cleaned up their
+	problems), V for hosts that are legit but have bad virus relaying
+	problems, CR for challenge-response sources. Will eventually move
+	to a DNSBL lookup. Use at your own risk; this is my local file and
+	the entries are maintained more in the addition than in the removal
+	once problems are resolved. Think of it as a record of past trust
+	issues, rather than as a realtime "this host is BAD NOW" lookup.
+	Used in the sendmail package to help score messages based on their
+	point of origin.
+
+
+patterns_xwalk
+
+	contains a crosswalk / reference distribution of the patterns,
+	with a key, the pattern, and our best-guess classification as to
+	its genericity, static or dynamic assignment, or other more
+	specific classifications (eg 'nat', 'wireless', 'cable', 'dsl').
+	May be useful in many contexts, but probably most useful as the
+	source of the DNSBL's data. 
+
+
+postfix_regexp_table
+postfix_regexp_table_compact
+postfix_regexp_table_nested
+
+	contains the patterns, in a format useful for postfix, such as to
+	check HELO or PTR in smtpd_client_restrictions. Will go away when
+	the DNSBL is live. 'nested' is an experimental format that was
+	intended to provide better performance, but which apparently does
+	not.
+
+
+rightanchors
+
+	contains a list of right-anchored substrings and our best-guess
+	classifications for their genericity, static/dynamic assignment.
+	Used in conjunction with sendmail as an alternate, non-access.db,
+	format in order to allow for custom logic and scoring, etc. Use in
+	any other context will likely require customization of the format.
+
+
+sendmail_access_db
+
+	the older, deprecated, version of rightanchors; distributed to be
+	used with sendmail's "access.db".
+
+
+sendmail_rules.m4
+
+	current patterns distribution for sendmail where the patterns are
+	to be compiled into a .cf via the .mc file; deprecated in favor of
+	the DNSBL, and will no longer be distributed once the DNSBL goes
+	live. 
+
+
+sendmail_rules_config.m4
+sendmail_rules_full.m4
+
+	legacy patterns distribution formats; "full" contains ALL of the
+	patterns whereas the sendmail_rules.m4 file trims out those with
+	rightanchor and compact left-anchor pattern matches. "config" is
+	also an alternate, legacy format, an evolutionary step on the way
+	to the "canonical" sendmail_rules.m4.
+
+	NOT MAINTAINED and last generated in June 2006.
+
+
+subset_pats
+
+	yet another alternate patterns distribution format, produced for
+	use by a client with far more stringent requirements as per 0
+	false positives. It is effectively the full patterns, excluding
+	those who we have classified as webhosts, edu/resnets, known
+	outmxen and spammers (legacy, because we no longer list any known
+	spammer domains). Not currently in use by the client for which it
+	was produced, and is not being updated as of January 2007.
+
+
+test_array
+
+	the set of our test IP/hostname pairs along with the key that
+	identifies each within the EL XML patterns database; for use with
+	testing currency and freshness of patterns as well as testing
+	whether the patterns actually match the hostnames they're supposed
+	to match. 
+
+
+wordlist
+
+	a dictionary, compiled from many sources, for testing for the
+	"Mobster I. Syphilitic" ratware, primarily, though now used in
+	a few other contexts within the sendmail package. Basically just
+	a list of words and names. 
+
+
+$Id: FILES,v 1.2 2009/02/13 00:48:10 schampeo Exp $
+

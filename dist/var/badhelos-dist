@@ -1,0 +1,10 @@
+# Enemieslist "bad HELO/EHLO strings" table
+#
+# format: 
+#
+#  bad-helo-string	[tab]	BYE
+#
+#
+badhelo.enemieslist.com		BYE
+LAPTOP	BYE
+VAIO	BYE

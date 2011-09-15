@@ -1,0 +1,89 @@
+#!/bin/sh
+
+DIR=/etc/mail
+ADIR=$DIR/tmp
+SDIR=/web/enemieslist.com/docs/downloads # for now
+EDIR=/web/enemieslist.com/dist/etc
+VDIR=/web/enemieslist.com/dist/var
+
+cp $EDIR/policy-dist $ADIR/policy
+echo "making policy table..."
+makemap -v btree $DIR/policy.db \
+        < $ADIR/policy 2>&1 | grep "duplicate key"
+
+cp $VDIR/whitelist-dist $ADIR/whitelist
+echo "making whitelist..."
+makemap -v btree $DIR/whitelist.db \
+        < $ADIR/whitelist 2>&1 | grep "duplicate key"
+
+cp $VDIR/blacklist-dist $ADIR/blacklist
+echo "making blacklist..."
+makemap -v btree $DIR/blacklist.db \
+        < $ADIR/blacklist 2>&1 | grep "duplicate key"
+
+cp $VDIR/permanentblacklist-dist $ADIR/permanentblacklist
+echo "making permanent blacklist..."
+makemap -v btree $DIR/permanentblacklist.db \
+    < $ADIR/permanentblacklist 2>&1 | grep "duplicate key"
+
+cp $VDIR/badhelos-dist $ADIR/badhelos
+echo "making list of bad helo strings..."
+makemap -v btree $DIR/badhelos.db \
+    < $ADIR/badhelos 2>&1 | grep "duplicate key"
+
+cp $VDIR/bannedmx-dist $ADIR/bannedmx
+echo "making list of banned mxes..."
+makemap -v btree $DIR/bannedmx.db \
+    < $ADIR/bannedmx 2>&1 | grep "duplicate key"
+
+cp $VDIR/bannedns-dist $ADIR/bannedns
+echo "making list of banned nses..."
+makemap -v btree $DIR/bannedns.db \
+    < $ADIR/bannedns 2>&1 | grep "duplicate key"
+
+cp $VDIR/bouncers-dist $ADIR/bouncers
+echo "making list of accept-then-bounce servers..."
+makemap -v btree $DIR/bouncers.db \
+    < $ADIR/bouncers 2>&1 | grep "duplicate key"
+
+cp $VDIR/geographic-dist $ADIR/geographic
+echo "making list of geographic blocks..."
+makemap -v btree $DIR/geographic.db \
+    < $ADIR/geographic 2>&1 | grep "duplicate key"
+
+cp $VDIR/offwhitelist-dist $ADIR/offwhitelist
+echo "making offwhitelist..."
+makemap -v btree $DIR/offwhitelist.db \
+    < $ADIR/offwhitelist 2>&1 | grep "duplicate key"
+
+cp $SDIR/sendmail_access_db $ADIR
+cat $ADIR/sendmail_access_db > $DIR/access
+#cp $SDIR/relay-habanero $ADIR/relay
+# turn this back into a >> if/when we re-include the rightanchors
+#cat $ADIR/relay > $DIR/access
+#cat $ADIR/local-access >> $DIR/access
+#cat $ADIR/queuegroups >> $DIR/access
+
+echo "making access.db..."
+makemap -v btree $DIR/access.db \
+        < $DIR/access 2>&1 | grep "duplicate key"
+
+cp $VDIR/domains-dist $ADIR/domains
+echo "making domain blacklist.db..."
+makemap -v btree $DIR/domains.db \
+        < $ADIR/domains 2>&1 | grep "duplicate key"
+
+cp $VDIR/spamtraps-dist $ADIR/spamtraps
+echo "making spamtraps db..."
+makemap -v btree $DIR/spamtraps.db \
+    < $ADIR/spamtraps 2>&1 | grep "duplicate key"
+
+cp $EDIR/abusecontacts-dist $ADIR/abusecontacts
+echo "making abusecontacts db..."
+makemap -v btree $DIR/abusecontacts.db \
+    < $ADIR/abusecontacts 2>&1 | grep "duplicate key"
+
+cp $VDIR/wordlist-dist $ADIR/wordlist
+echo "making wordlist db..."
+makemap -v btree $DIR/wordlist.db \
+    < $ADIR/wordlist 2>&1 | grep "duplicate key"

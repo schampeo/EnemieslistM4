@@ -1,0 +1,28 @@
+# Enemieslist "tainted servers" table
+#
+# format:
+# 
+#  hostname-or-ip	[tab]	token
+#
+# where the tokens are one of:
+#
+# OFFWHITE	- mail server that has relayed spam
+# PHISH		- mail server that has relayed phishing scams
+# BADRECD	- mail server with lousy audit trail capabilities
+# 419		- mail server that has relayed 419/advance fee fraud scams
+# LEGIT		- mail server you know is legitimate
+# VIRUS		- mail server currently relaying viruses
+# CR		- mail server known for challenge/response abuse
+# WAS419	- mail server formerly known to relay 419 scams (reformed?)
+#
+# the following hosts are merely here for testing purposes. The most current
+# offwhitelist file may be downloaded from enemieslist.com.
+#
+offwhite.enemieslist.com	OFFWHITE
+phish.enemieslist.com	PHISH
+badrecd.enemieslist.com	BADRECD
+419.enemieslist.com	419
+legit.enemieslist.com	LEGIT
+virus.enemieslist.com	VIRUS
+cr.enemieslist.com	CR
+was419.enemieslist.com	WAS419

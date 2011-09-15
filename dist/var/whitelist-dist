@@ -1,0 +1,8 @@
+# Enemieslist "override all checks" whitelist table
+#
+# format:
+#
+#  IP-or-octet-of-whitelisted-host	[tab]	OK
+#
+# NOTE: you should probably whitelist localhost.
+127.0.0.1	OK

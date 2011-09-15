@@ -1,0 +1,54 @@
+# Enemieslist "IP dotted quad or octet<->ISO country code" table
+#
+# format: 
+#
+#  IP-octet-or-dotted-quad	[tab]	ISO-country-code-or-token
+#
+# NOTE: tokens include both ISO 3166-1 two-letter country codes and from
+# the following table, which covers vague assignments or special cases,
+# such as netblocks assigned to companies in one country who provide proxy
+# services for other countries.
+#
+# africa: for unspecified African netblocks
+# proxy: NAT/PAT proxy services that strip point of injection IP
+# satellite: for satellite service
+# webmail: for commonly abused freemail/webmail services 
+# 
+# The list is intended to be kept current using the stats found here:
+#
+#  http://www.completewhois.com/statistics/data/ips-bycountry/rirstats/
+#
+# These are provided for testing purposes only. The current geographic
+# file may be downloaded from the enemieslist.com Web site.
+#
+127.127.127.127	africa
+127.127.127.128	proxy
+127.127.127.129	satellite
+127.127.127.130	webmail
+127.127.127.131	AR
+127.127.127.132	BF
+127.127.127.133	BG
+127.127.127.134	BJ
+127.127.127.135	BW
+127.127.127.136	CI
+127.127.127.137	CY
+127.127.127.138	DK
+127.127.127.139	ES
+127.127.127.140	GH
+127.127.127.141	IL
+127.127.127.142	KE
+127.127.127.143	KR
+127.127.127.144	LB
+127.127.127.145	LV
+127.127.127.146	ML
+127.127.127.147	MR
+127.127.127.148	MY
+127.127.127.149	NG
+127.127.127.150	NL
+127.127.127.151	RW
+127.127.127.152	SN
+127.127.127.153	TG
+127.127.127.154	ZA
+127.127.127.155	ZW
+
+

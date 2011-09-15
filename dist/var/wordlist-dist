@@ -1,0 +1,17 @@
+# Enemieslist "dictionary" table
+#
+# format:
+#
+#  word	[tab]	token
+#
+# where the token may be one of the following:
+#
+#  WORD - a word
+#  NAME - a name
+#  BOTH - a name that is also a common word (e.g., fish)
+#
+# This is for testing only. The current dictionary may be downloaded
+# from enemieslist.com.
+foo	   WORD
+bar	   NAME
+baz	   BOTH

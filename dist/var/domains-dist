@@ -1,0 +1,8 @@
+# Enemieslist "known spammer domains" table
+#
+# format:
+#
+#  spammer-domain	[tab]	SPAMMER
+#
+#
+spammer.enemieslist.com	SPAMMER

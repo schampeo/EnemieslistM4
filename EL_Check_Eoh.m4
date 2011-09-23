@@ -461,6 +461,12 @@ R<?>$+.2.2 $| $* $| $*HELOGEN:webhost$* $| BLOCK	$: <REJWEB>
 R<?>$+.2.2 $| $* $| $* +HELOGEN:webhost$* $| ASK	$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $* !HELOGEN:webhost$* $| ASK	$: <REJWEB>
 
+# special case for handling dedicated servers
+R<?>$+.2.3 $| $* $| $*HELOGEN:dedhost$* $| TAG		$: <TAGDED>
+R<?>$+.2.3 $| $* $| $*HELOGEN:dedhost$* $| BLOCK	$: <REJDED>
+R<?>$+.2.3 $| $* $| $* +HELOGEN:dedhost$* $| ASK	$: <TAGDED>
+R<?>$+.2.3 $| $* $| $* !HELOGEN:dedhost$* $| ASK	$: <REJDED>
+
 R<?>$+.0.2 $| $* $| $*HELOGEN:static$* $| TAG		$: <TAGSTA>
 R<?>$+.0.2 $| $* $| $*HELOGEN:static$* $| BLOCK		$: <REJSTA>
 R<?>$+.0.2 $| $* $| $* +HELOGEN:static$* $| ASK		$: <TAGSTA>
@@ -532,6 +538,12 @@ R<?>$+.2.2 $| $* $| $*HELOGEN:webhost$* $| TAG		$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $*HELOGEN:webhost$* $| BLOCK	$: <REJWEB>
 R<?>$+.2.2 $| $* $| $* +HELOGEN:webhost$* $| ASK	$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $* !HELOGEN:webhost$* $| ASK	$: <REJWEB>
+
+# special case for handling dedicated servers
+R<?>$+.2.3 $| $* $| $*HELOGEN:dedhost$* $| TAG		$: <TAGDED>
+R<?>$+.2.3 $| $* $| $*HELOGEN:dedhost$* $| BLOCK	$: <REJDED>
+R<?>$+.2.3 $| $* $| $* +HELOGEN:dedhost$* $| ASK	$: <TAGDED>
+R<?>$+.2.3 $| $* $| $* !HELOGEN:dedhost$* $| ASK	$: <REJDED>
 
 R<?>$+.0.2 $| $* $| $*HELOGEN:static$* $| TAG		$: <TAGSTA>
 R<?>$+.0.2 $| $* $| $*HELOGEN:static$* $| BLOCK		$: <REJSTA>
@@ -614,6 +626,9 @@ R<REJSPM>				$#error $@ 5.7.1. $: "554 SPAMMER Contact <"$&{ELContactEmail}"> if
 R<TAGWEB>				$: $>EL_TagSuspicious <ifdef(`confEL_TagErrMsgGenericWebhostrDNSHELO', `confEL_TagErrMsgGenericWebhostrDNSHELO', `"remote host has generic reverse DNS HELO (webhost)"')> $| ifdef(`confEL_ScoreHELOGENWebhost', `confEL_ScoreHELOGENWebhost', `2')
 R<REJWEB>				$#error $@ 5.7.1. $: ifdef(`confEL_ErrHeloGenrdnsWebhost', `confEL_ErrHeloGenrdnsWebhost', `"554 WEBHELO Contact <"$&{ELContactEmail}"> if in error, <"$&f">, but we refuse mail directly from hosts that HELO with generic Web hosting provider reverse DNS; please use another outbound mail server, "$&{client_name}"."') 
 
+R<TAGDED>				$: $>EL_TagSuspicious <ifdef(`confEL_TagErrMsgGenericDedhostrDNSHELO', `confEL_TagErrMsgGenericDedhostrDNSHELO', `"remote host has generic reverse DNS HELO (dedhost)"')> $| ifdef(`confEL_ScoreHELOGENDedhost', `confEL_ScoreHELOGENDedhost', `2')
+R<REJDED>				$#error $@ 5.7.1. $: ifdef(`confEL_ErrHeloGenrdnsDedhost', `confEL_ErrHeloGenrdnsDedhost', `"554 DEDHELO Contact <"$&{ELContactEmail}"> if in error, <"$&f">, but we refuse mail directly from hosts that HELO with generic dedicated hosting provider reverse DNS; please use another outbound mail server, "$&{client_name}"."') 
+
 R<TAGRES>				$: $>EL_TagSuspicious <ifdef(`confEL_TagErrMsgGenericResnetrDNSHELO', `confEL_TagErrMsgGenericResnetrDNSHELO', `"remote host has generic reverse DNS HELO (resnet)"')> $| ifdef(`confEL_ScoreHELOGENResnet', `confEL_ScoreHELOGENResnet', `4')
 R<REJRES>				$#error $@ 5.7.1. $: ifdef(`confEL_ErrHeloGenrdnsResnet', `confEL_ErrHeloGenrdnsResnet', `"554 RSNHELO Contact <"$&{ELContactEmail}"> if in error, <"$&f">, but we refuse mail directly from hosts that HELO with generic residential network reverse DNS; please use another outbound mail server, "$&{client_name}"."') 
 
@@ -657,6 +672,12 @@ R<?>$+.2.2 $| $* $| $*GENRDNS:webhost$* $| TAG		$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $*GENRDNS:webhost$* $| BLOCK	$: <REJWEB>
 R<?>$+.2.2 $| $* $| $* +GENRDNS:webhost$* $| ASK	$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $* !GENRDNS:webhost$* $| ASK	$: <REJWEB>
+
+# special case for handling dedicated servers
+R<?>$+.2.3 $| $* $| $*GENRDNS:dedhost$* $| TAG		$: <TAGDED>
+R<?>$+.2.3 $| $* $| $*GENRDNS:dedhost$* $| BLOCK	$: <REJDED>
+R<?>$+.2.3 $| $* $| $* +GENRDNS:dedhost$* $| ASK	$: <TAGDED>
+R<?>$+.2.3 $| $* $| $* !GENRDNS:dedhost$* $| ASK	$: <REJDED>
 
 R<?>$+.0.2 $| $* $| $*GENRDNS:static$* $| TAG		$: <TAGSTA>
 R<?>$+.0.2 $| $* $| $*GENRDNS:static$* $| BLOCK		$: <REJSTA>
@@ -730,6 +751,12 @@ R<?>$+.2.2 $| $* $| $*GENRDNS:webhost$* $| TAG		$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $*GENRDNS:webhost$* $| BLOCK	$: <REJWEB>
 R<?>$+.2.2 $| $* $| $* +GENRDNS:webhost$* $| ASK	$: <TAGWEB>
 R<?>$+.2.2 $| $* $| $* !GENRDNS:webhost$* $| ASK	$: <REJWEB>
+
+# special case for handling dedicated servers
+R<?>$+.2.3 $| $* $| $*GENRDNS:dedhost$* $| TAG		$: <TAGDED>
+R<?>$+.2.3 $| $* $| $*GENRDNS:dedhost$* $| BLOCK	$: <REJDED>
+R<?>$+.2.3 $| $* $| $* +GENRDNS:dedhost$* $| ASK	$: <TAGDED>
+R<?>$+.2.3 $| $* $| $* !GENRDNS:dedhost$* $| ASK	$: <REJDED>
 
 R<?>$+.0.2 $| $* $| $*GENRDNS:static$* $| TAG		$: <TAGSTA>
 R<?>$+.0.2 $| $* $| $*GENRDNS:static$* $| BLOCK		$: <REJSTA>
@@ -811,6 +838,9 @@ R<REJSPM>				$#error $@ 5.7.1. $: "554 SPAMMER Contact <"$&{ELContactEmail}"> if
 
 R<TAGWEB>				$: $>EL_TagSuspicious <ifdef(`confEL_TagErrMsgGenericWebhostrDNS', `confEL_TagErrMsgGenericWebhostrDNS', `"remote host has generic reverse DNS (webhost)"')> $| ifdef(`confEL_ScoreGENRDNSWebhost', `confEL_ScoreGENRDNSWebhost', `2')
 R<REJWEB>				$#error $@ 5.7.1. $: ifdef(`confEL_ErrGenrdnsWebhost', `confEL_ErrGenrdnsWebhost', `"554 WEBGENR Contact <"$&{ELContactEmail}"> if in error, <"$&f">, but we refuse mail directly from hosts with generic Web hosting provider reverse DNS; please use another outbound mail server, "$&{client_name}"."') 
+
+R<TAGDED>				$: $>EL_TagSuspicious <ifdef(`confEL_TagErrMsgGenericDedhostrDNS', `confEL_TagErrMsgGenericDedhostrDNS', `"remote host has generic reverse DNS (dedhost)"')> $| ifdef(`confEL_ScoreGENRDNSDedhost', `confEL_ScoreGENRDNSDedhost', `2')
+R<REJDED>				$#error $@ 5.7.1. $: ifdef(`confEL_ErrGenrdnsDedhost', `confEL_ErrGenrdnsDedhost', `"554 DEDGENR Contact <"$&{ELContactEmail}"> if in error, <"$&f">, but we refuse mail directly from hosts with generic dedicated hosting provider reverse DNS; please use another outbound mail server, "$&{client_name}"."') 
 
 R<TAGRES>				$: $>EL_TagSuspicious <ifdef(`confEL_TagErrMsgGenericResnetrDNS', `confEL_TagErrMsgGenericResnetrDNS', `"remote host has generic reverse DNS (resnet)"')> $| ifdef(`confEL_ScoreGENRDNSResnet', `confEL_ScoreGENRDNSResnet', `4')
 R<REJRES>				$#error $@ 5.7.1. $: ifdef(`confEL_ErrGenrdnsResnet', `confEL_ErrGenrdnsResnet', `"554 RSNGENR Contact <"$&{ELContactEmail}"> if in error, <"$&f">, but we refuse mail directly from hosts with generic residential network reverse DNS; please use another outbound mail server, "$&{client_name}"."') 

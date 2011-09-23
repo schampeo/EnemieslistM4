@@ -53,6 +53,7 @@ HX-JM: $>EL_Check_Header_Exists
 # apparently used by legitimate rewards program per CXC
 #HX-Job: $>EL_Check_Header_Exists
 HX-LCM: $>EL_Check_Header_Exists
+HX-Mailer-Sent-By: $>EL_Check_Header_Exists
 HX-Mailid: $>EL_Check_Header_Exists
 # used by Netflix in addition to hardcore spammers
 #HX-MailingID: $>EL_Check_Header_Exists
